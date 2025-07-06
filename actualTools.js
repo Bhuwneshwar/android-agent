@@ -3,7 +3,17 @@ import axios from "axios";
 config();
 
 export const getCurrentTime = () => {
-    return Date.now();
+     
+    return new Date(Date.now()).toLocaleString("en-IN", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
+        hour12: true,
+        timeZone: "Asia/Kolkata"
+    });
 };
 
 function msToIndianTime({ ms }) {

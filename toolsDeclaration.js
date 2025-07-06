@@ -19,7 +19,7 @@ const toolsDeclaration = [
     },
     {
         name: "getCurrentTime",
-        description: "get current date and time in milliseconds"
+        description: "get current date and time in readable format in string "
     },
     {
         name: "msToIndianTime",
