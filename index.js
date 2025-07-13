@@ -13,7 +13,7 @@ app.use(express.json());
 const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
 
 const agent = async () => {
-  //console.log(JSON.stringify(conversation, null, 2));
+  // console.log(JSON.stringify(conversation, null, 2));
   // const systemPrompt = `
   // You are a powerful AI assistant that helps users perform actions on their Android phone.
   // You can control various phone functions like making calls, sending WhatsApp messages, sending emails, turning off the screen, and playing music.
@@ -77,15 +77,14 @@ ${JSON.stringify(toolsDeclaration, null, 2)}
     },
   });
   //console.log(JSON.stringify(response, null, 2));
+
   conversation.push({
     role: "model",
     parts: [
       {
-        text:
-          response.text ||
-          JSON.stringify(response.functionCalls) +
-            " | timestamp: " +
-            getCurrentTime(),
+        text: JSON.stringify(
+          text(response.text || JSON.stringify(response.functionCalls))
+        ),
       },
     ],
   });
@@ -93,11 +92,9 @@ ${JSON.stringify(toolsDeclaration, null, 2)}
     role: "model",
     parts: [
       {
-        text:
-          response.text ||
-          JSON.stringify(response.functionCalls) +
-            " | timestamp: " +
-            getCurrentTime(),
+        text: JSON.stringify(
+          text(response.text || JSON.stringify(response.functionCalls))
+        ),
       },
     ],
   });
@@ -106,6 +103,11 @@ ${JSON.stringify(toolsDeclaration, null, 2)}
 
 const conversation = [...(await getHistory())];
 let tempConversation = [];
+
+const text = (text) => ({
+  text: text,
+  timestamp: getCurrentTime(),
+});
 app.post("/api/v1/gemini-agent", async (req, res) => {
   try {
     const { prompt } = req.body;
@@ -117,21 +119,37 @@ app.post("/api/v1/gemini-agent", async (req, res) => {
 
     conversation.push({
       role: "user",
-      parts: [{ text: prompt + " | timestamp: " + getCurrentTime() }],
+      parts: [{ text: JSON.stringify(text(prompt)) }],
     });
     tempConversation.push({
       role: "user",
-      parts: [{ text: prompt + " | timestamp: " + getCurrentTime() }],
+      parts: [{ text: JSON.stringify(text(prompt)) }],
     });
 
     let maxLoop = 10;
     while (maxLoop-- > 0) {
       const response = await agent();
-      //console.
 
-      if (response.functionCalls) {
-        const FunName = response.functionCalls[0].name;
-        const FunArgs = response.functionCalls[0].args;
+      //console.log()
+
+      // "text": "{\"text\":\"[{\\\"name\\\":\\\"setTimerForTask\\\",\\\"args\\\":{\\\"second\\\":120,\\\"message\\\":\\\"whatsapp suraj\\\"}}]\",\"timestamp\":\"13 July 2025 at 8:07:51 pm\"}",
+      //   "mode": "text" // 5:30 = 3300 seconds
+      let functionCalls;
+      try {
+        let parsedText = JSON.parse(response.text);
+        console.log({ parsedText });
+        parsedText = JSON.parse(parsedText.text);
+        console.log({ parsedText });
+        functionCalls = parsedText;
+      } catch (error) {}
+
+      functionCalls = response.functionCalls || functionCalls;
+
+      if (functionCalls) {
+        console.log("Function calls detected:", functionCalls);
+
+        const FunName = functionCalls[0].name;
+        const FunArgs = functionCalls[0].args;
         // console.log({ FunArgs });
         const gottenFunction = availableTools[FunName];
 
@@ -140,12 +158,6 @@ app.post("/api/v1/gemini-agent", async (req, res) => {
           conversation.push({
             role: "user",
             parts: [
-              // {
-              //   text:
-              //     `tool says: ${toolResponse}` +
-              //     " | timestamp: " +
-              //     getCurrentTime(),
-              // },
               {
                 functionResponse: {
                   name: FunName,
@@ -162,25 +174,29 @@ app.post("/api/v1/gemini-agent", async (req, res) => {
             role: "user",
             parts: [
               {
-                text:
-                  `tool says: ${toolResponse}` +
-                  " | timestamp: " +
-                  getCurrentTime(),
+                functionResponse: {
+                  name: FunName,
+                  response: {
+                    response: {
+                      stringValue: toolResponse,
+                    },
+                  },
+                },
               },
             ],
           });
         } else {
           res.send({
-            text: response.text,
-            functionCalls: response.functionCalls,
-            mode: response.text ? "text" : "functionCalls",
+            // text: response.text,
+            functionCalls,
+            mode: functionCalls ? "functionCalls" : "text",
           });
           break;
         }
       } else {
         res.send({
           text: response.text,
-          functionCalls: response.functionCalls,
+          // functionCalls: response.functionCalls,
           mode: response.text ? "text" : "functionCalls",
         });
         break;

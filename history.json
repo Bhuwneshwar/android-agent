@@ -3,7 +3,7 @@
     "role": "user",
     "parts": [
       {
-        "text": "hi | timestamp: 8 July 2025 at 10:46:30 pm"
+        "text": "{\"text\":\"2 hours baad sorry bolo\",\"timestamp\":\"13 July 2025 at 9:59:38 pm\"}"
       }
     ]
   },
@@ -11,7 +11,7 @@
     "role": "model",
     "parts": [
       {
-        "text": "Hello! How can I help you?"
+        "text": "{\"text\":\"[{\\\"name\\\":\\\"setTimerForTask\\\",\\\"args\\\":{\\\"second\\\":7200,\\\"message\\\":\\\"sorry bolo\\\"}}]\",\"timestamp\":\"13 July 2025 at 9:59:41 pm\"}"
       }
     ]
   },
@@ -19,7 +19,7 @@
     "role": "user",
     "parts": [
       {
-        "text": "light on karo | timestamp: 8 July 2025 at 10:47:49 pm"
+        "text": "{\"text\":\"2 hours baad sorry bolo\",\"timestamp\":\"13 July 2025 at 10:00:31 pm\"}"
       }
     ]
   },
@@ -27,7 +27,7 @@
     "role": "model",
     "parts": [
       {
-        "text": "[{\"name\":\"flashlightOn\",\"args\":{}}] | timestamp: 8 July 2025 at 10:47:50 pm"
+        "text": "{\"text\":\"[{\\\"name\\\":\\\"setTimerForTask\\\",\\\"args\\\":{\\\"second\\\":7200,\\\"message\\\":\\\"sorry bolo\\\"}}]\",\"timestamp\":\"13 July 2025 at 10:00:34 pm\"}"
       }
     ]
   },
@@ -35,7 +35,7 @@
     "role": "user",
     "parts": [
       {
-        "text": "2 minuts baad light off kar dena ok | timestamp: 8 July 2025 at 10:49:08 pm"
+        "text": "{\"text\":\"what is weather now\",\"timestamp\":\"13 July 2025 at 10:01:19 pm\"}"
       }
     ]
   },
@@ -43,7 +43,33 @@
     "role": "model",
     "parts": [
       {
-        "text": "[{\"name\":\"setTimerForTask\",\"args\":{\"second\":120,\"message\":\"light off kar dena\"}}] | timestamp: 8 July 2025 at 10:49:11 pm"
+        "text": "{\"text\":\"[{\\\"name\\\":\\\"getWeatherInfo\\\",\\\"args\\\":{}}]\",\"timestamp\":\"13 July 2025 at 10:01:21 pm\"}"
+      }
+    ]
+  },
+  {
+    "role": "user",
+    "parts": [
+      {
+        "functionResponse": {
+          "name": "getWeatherInfo",
+          "response": {
+            "response": {
+              "stringValue": {
+                "cod": 401,
+                "message": "Invalid API key. Please see https://openweathermap.org/faq#error401 for more info."
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "role": "model",
+    "parts": [
+      {
+        "text": "{\"text\":\"I am unable to get the weather information due to an invalid API key.\",\"timestamp\":\"13 July 2025 at 10:01:22 pm\"}"
       }
     ]
   }
