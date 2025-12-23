@@ -3,7 +3,7 @@
     "role": "user",
     "parts": [
       {
-        "text": "{\"text\":\"2 hours baad sorry bolo\",\"timestamp\":\"13 July 2025 at 9:59:38 pm\"}"
+        "text": "{\"text\":\"what is number of bikash\",\"timestamp\":\"20 December 2025 at 10:05:21 pm\"}"
       }
     ]
   },
@@ -11,7 +11,7 @@
     "role": "model",
     "parts": [
       {
-        "text": "{\"text\":\"[{\\\"name\\\":\\\"setTimerForTask\\\",\\\"args\\\":{\\\"second\\\":7200,\\\"message\\\":\\\"sorry bolo\\\"}}]\",\"timestamp\":\"13 July 2025 at 9:59:41 pm\"}"
+        "text": "tool calling: undefined"
       }
     ]
   },
@@ -19,7 +19,7 @@
     "role": "user",
     "parts": [
       {
-        "text": "{\"text\":\"2 hours baad sorry bolo\",\"timestamp\":\"13 July 2025 at 10:00:31 pm\"}"
+        "text": "{\"text\":\"what is number of bikash\",\"timestamp\":\"20 December 2025 at 10:14:59 pm\"}"
       }
     ]
   },
@@ -27,7 +27,7 @@
     "role": "model",
     "parts": [
       {
-        "text": "{\"text\":\"[{\\\"name\\\":\\\"setTimerForTask\\\",\\\"args\\\":{\\\"second\\\":7200,\\\"message\\\":\\\"sorry bolo\\\"}}]\",\"timestamp\":\"13 July 2025 at 10:00:34 pm\"}"
+        "text": "tool calling: undefined"
       }
     ]
   },
@@ -35,7 +35,7 @@
     "role": "user",
     "parts": [
       {
-        "text": "{\"text\":\"what is weather now\",\"timestamp\":\"13 July 2025 at 10:01:19 pm\"}"
+        "text": "{\"text\":\"what is number of bikash\",\"timestamp\":\"20 December 2025 at 10:20:47 pm\"}"
       }
     ]
   },
@@ -43,33 +43,7 @@
     "role": "model",
     "parts": [
       {
-        "text": "{\"text\":\"[{\\\"name\\\":\\\"getWeatherInfo\\\",\\\"args\\\":{}}]\",\"timestamp\":\"13 July 2025 at 10:01:21 pm\"}"
-      }
-    ]
-  },
-  {
-    "role": "user",
-    "parts": [
-      {
-        "functionResponse": {
-          "name": "getWeatherInfo",
-          "response": {
-            "response": {
-              "stringValue": {
-                "cod": 401,
-                "message": "Invalid API key. Please see https://openweathermap.org/faq#error401 for more info."
-              }
-            }
-          }
-        }
-      }
-    ]
-  },
-  {
-    "role": "model",
-    "parts": [
-      {
-        "text": "{\"text\":\"I am unable to get the weather information due to an invalid API key.\",\"timestamp\":\"13 July 2025 at 10:01:22 pm\"}"
+        "text": "tool calling: undefined"
       }
     ]
   }
